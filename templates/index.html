@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phishing Detector</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 30px;
+        }
+
+        input {
+            padding: 10px;
+            width: 300px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #3b82f6;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2563eb;
+        }
+
+        .card {
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        .low {
+            color: #22c55e;
+        }
+
+        .medium {
+            color: #facc15;
+        }
+
+        .high {
+            color: #ef4444;
+        }
+
+        ul {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🔍 Phishing Detection Tool</h1>
+
+    <form method="POST">
+        <input type="text" name="url" placeholder="Enter URL..." required>
+        <button type="submit">Analyze</button>
+    </form>
+
+    {% if result %}
+    <div class="card">
+        <h2>Results</h2>
+
+        <p><strong>URL:</strong> {{ result.url }}</p>
+        <p><strong>Score:</strong> {{ result.score }}/100</p>
+
+        <p>
+            <strong>Risk:</strong>
+            <span class="{{ result.risk|lower }}">
+                {{ result.risk }}
+            </span>
+        </p>
+
+        <h3>Indicators:</h3>
+        <ul>
+            {% for r in result.reasons %}
+                <li>{{ r }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+</body>
+</html>
