@@ -105,7 +105,13 @@ def home():
 
     if request.method == "POST":
         url = request.form.get("url")
+
+        # 🛡️ Prevent empty input crash
+        if not url or url.strip() == "":
+            return render_template("index.html", result=None)
+
         score, risk, reasons = analyze(url)
+
         result = {
             "url": url,
             "score": score,
@@ -116,4 +122,4 @@ def home():
     return render_template("index.html", result=result)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
