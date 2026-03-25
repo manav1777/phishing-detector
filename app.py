@@ -52,6 +52,15 @@ def check_url_shortener(url):
     shorteners = ["bit.ly", "tinyurl.com", "t.co", "goo.gl"]
     return any(s in url.lower() for s in shorteners)
 
+def check_suspicious_tld(url):
+    suspicious_tlds = [".ru", ".tk", ".ml", ".ga", ".cf", ".to"]
+
+    for tld in suspicious_tlds:
+        if url.lower().endswith(tld):
+            return True
+    return False
+
+
 # ---- Analysis logic ----
 
 def analyze(url):
@@ -82,11 +91,17 @@ def analyze(url):
         reasons.append("Fake subdomain trick")
         score += 40
 
+    if check_suspicious_tld(url):
+        reasons.append("Suspicious domain extension")
+        score += 20
+
     if check_url_shortener(url):
         reasons.append("URL shortener used")
         score += 20
 
     score = min(score, 100)
+
+    
 
     if score < 20:
         risk = "Low"
