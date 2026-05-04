@@ -112,16 +112,35 @@ def analyze(url):
 
     return score, risk, reasons
 
-# ---- Routes ----
+
+#---- demo route-----
+
+@app.route("/demo")
+def demo():
+    demo_url = "http://paypal-secure-login.verify-account.ru"
+
+    score, risk, reasons = analyze(demo_url)
+
+    result = {
+        "url": demo_url,
+        "score": score,
+        "risk": risk,
+        "reasons": reasons
+    }
+
+    return render_template("index.html", result=result, demo_url=demo_url)
+
+
+#---- Routes ----
 
 @app.route("/", methods=["GET", "POST"])
 def home():
     result = None
+    demo_url = ""
 
     if request.method == "POST":
         url = request.form.get("url")
 
-        # 🛡️ Prevent empty input crash
         if not url or url.strip() == "":
             return render_template("index.html", result=None)
 
@@ -134,7 +153,7 @@ def home():
             "reasons": reasons
         }
 
-    return render_template("index.html", result=result)
+    return render_template("index.html", result=result, demo_url=demo_url)
 
 if __name__ == "__main__":
     app.run()

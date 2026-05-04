@@ -13,55 +13,80 @@
         }
 
         h1 {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            font-size: 32px;
         }
 
-        form {
+        p.subtitle {
+            color: #94a3b8;
             margin-bottom: 30px;
         }
 
+        .input-section {
+            margin-bottom: 25px;
+        }
+
         input {
-            padding: 10px;
-            width: 300px;
-            border-radius: 8px;
+            padding: 14px;
+            width: 450px;
+            border-radius: 10px;
             border: none;
+            font-size: 16px;
+        }
+
+        .buttons {
+            margin-top: 15px;
         }
 
         button {
-            padding: 10px 20px;
+            padding: 12px 20px;
             border: none;
             border-radius: 8px;
             background-color: #3b82f6;
             color: white;
             cursor: pointer;
+            font-size: 15px;
+            margin: 5px;
         }
 
         button:hover {
             background-color: #2563eb;
         }
 
+        .demo-btn {
+            background-color: #334155;
+        }
+
+        .demo-btn:hover {
+            background-color: #475569;
+        }
+
         .card {
             background-color: #1e293b;
-            padding: 20px;
-            border-radius: 12px;
-            width: 400px;
-            margin: 0 auto;
+            padding: 25px;
+            border-radius: 14px;
+            width: 450px;
+            margin: 30px auto;
+            text-align: left;
         }
 
         .low {
             color: #22c55e;
+            font-weight: bold;
         }
 
         .medium {
             color: #facc15;
+            font-weight: bold;
         }
 
         .high {
             color: #ef4444;
+            font-weight: bold;
         }
 
         ul {
-            text-align: left;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -69,34 +94,61 @@
 <body>
 
     <h1>🔍 Phishing Detection Tool</h1>
+    <p class="subtitle">Analyze URLs for phishing, spoofing, and suspicious patterns</p>
 
     <form method="POST">
-        <input type="text" name="url" placeholder="Enter URL..." required>
-        <button type="submit">Analyze</button>
+
+        <div class="input-section">
+            <input 
+                type="text" 
+                name="url" 
+                id="urlInput"
+                placeholder="Enter a URL to analyze..."
+                value="{{ request.form.get('url', '') }}"
+                required
+            >
+        </div>
+
+        <div class="buttons">
+            <button type="submit">Analyze URL</button>
+            <button type="button" class="demo-btn" onclick="loadDemo()">
+                Try Example
+            </button>
+        </div>
+
     </form>
 
     {% if result %}
     <div class="card">
-        <h2>Results</h2>
+
+        <h2>Analysis Results</h2>
 
         <p><strong>URL:</strong> {{ result.url }}</p>
         <p><strong>Score:</strong> {{ result.score }}/100</p>
 
         <p>
-            <strong>Risk:</strong>
+            <strong>Risk Level:</strong>
             <span class="{{ result.risk|lower }}">
                 {{ result.risk }}
             </span>
         </p>
 
-        <h3>Indicators:</h3>
+        <h3>Detected Indicators:</h3>
         <ul>
             {% for r in result.reasons %}
                 <li>{{ r }}</li>
             {% endfor %}
         </ul>
+
     </div>
     {% endif %}
+
+    <script>
+        function loadDemo() {
+            document.getElementById("urlInput").value =
+                "http://paypal-secure-login.verify-account.ru";
+        }
+    </script>
 
 </body>
 </html>
