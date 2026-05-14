@@ -60,7 +60,6 @@ def check_suspicious_tld(url):
             return True
     return False
 
-
 # ---- Analysis logic ----
 
 def analyze(url):
@@ -129,7 +128,6 @@ def demo():
     }
 
     return render_template("index.html", result=result, demo_url=demo_url)
-
 
 #---- Routes ----
 

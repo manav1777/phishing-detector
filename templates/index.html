@@ -70,6 +70,19 @@
             text-align: left;
         }
 
+        #infoBox h2 {
+            font-size: 28px;
+        }
+
+        #infoBox h3 {
+            font-size: 18px;
+        }
+
+        #infoBox p {
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
         .low {
             color: #22c55e;
             font-weight: bold;
@@ -111,11 +124,15 @@
 
         <div class="buttons">
             <button type="submit">Analyze URL</button>
+
             <button type="button" class="demo-btn" onclick="loadDemo()">
                 Try Example
             </button>
-        </div>
 
+            <button type="button" onclick="toggleInfo()">
+                Details
+            </button>
+        </div>
     </form>
 
     {% if result %}
@@ -143,10 +160,38 @@
     </div>
     {% endif %}
 
-    <script>
+    <div id="infoBox" style="display:none; background:#1e293b; padding:20px; border-radius:14px; width:450px; margin:20px auto; text-align:left;">
+
+        <h2>About This Tool</h2>
+
+        <p>This tool analyzes URLs to identify phishing attempts, spoofed domains, and suspicious behavior patterns that are commonly used in cyber attacks.</p>
+
+        <h3>Features</h3>
+        <p>
+            URL structure analysis<br>
+            Detection of brand impersonation<br>
+            Suspicious keyword and pattern scanning<br>
+            Risk scoring based on multiple indicators
+        </p>
+
+        <h3>Tech Stack</h3>
+        <p>Python Flask HTML CSS</p>
+
+    </div>
+
+        <script>
         function loadDemo() {
             document.getElementById("urlInput").value =
                 "http://paypal-secure-login.verify-account.ru";
+        }
+
+        function toggleInfo() {
+            var box = document.getElementById("infoBox");
+            if (box.style.display === "block") {
+                box.style.display = "none";
+            } else {
+                box.style.display = "block";
+            }
         }
     </script>
 
