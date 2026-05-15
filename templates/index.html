@@ -1,199 +1,233 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Phishing Detector</title>
+<meta charset="UTF-8">
+<title>Phishing Detection Tool</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #0f172a;
-            color: white;
-            text-align: center;
-            padding: 40px;
-        }
+<style>
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background: linear-gradient(to right, #1c92d2, #f2fcfe);
+    margin: 0;
+    padding: 0;
+    color: #0f172a;
+}
 
-        h1 {
-            margin-bottom: 10px;
-            font-size: 32px;
-        }
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
 
-        p.subtitle {
-            color: #94a3b8;
-            margin-bottom: 30px;
-        }
+h1 {
+    text-align: center;
+    font-size: 34px;
+    color: #0b3d91;
+}
 
-        .input-section {
-            margin-bottom: 25px;
-        }
+.subtitle {
+    text-align: center;
+    font-size: 18px;
+    color: #334155;
+    margin-bottom: 25px;
+}
 
-        input {
-            padding: 14px;
-            width: 450px;
-            border-radius: 10px;
-            border: none;
-            font-size: 16px;
-        }
+input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    font-size: 16px;
+}
 
-        .buttons {
-            margin-top: 15px;
-        }
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
 
-        button {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            background-color: #3b82f6;
-            color: white;
-            cursor: pointer;
-            font-size: 15px;
-            margin: 5px;
-        }
+button {
+    width: 200px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background: #2563eb;
+    color: white;
+}
 
-        button:hover {
-            background-color: #2563eb;
-        }
+button:hover {
+    background: #1d4ed8;
+}
 
-        .demo-btn {
-            background-color: #334155;
-        }
+.secondary-btn {
+    background: #334155;
+    font-size: 16px;
+}
 
-        .demo-btn:hover {
-            background-color: #475569;
-        }
+.secondary-btn:hover {
+    background: #1f2937;
+}
 
-        .card {
-            background-color: #1e293b;
-            padding: 25px;
-            border-radius: 14px;
-            width: 450px;
-            margin: 30px auto;
-            text-align: left;
-        }
+.card {
+    margin-top: 25px;
+    padding: 20px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    text-align: left;
+}
 
-        #infoBox h2 {
-            font-size: 28px;
-        }
+.card h2 {
+    color: #0b3d91;
+}
 
-        #infoBox h3 {
-            font-size: 18px;
-        }
+.card h3 {
+    color: #334155;
+    margin-top: 15px;
+}
 
-        #infoBox p {
-            font-size: 15px;
-            line-height: 1.4;
-        }
+#infoBox {
+    display: none;
+    margin-top: 25px;
+    padding: 20px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    text-align: left;
+}
 
-        .low {
-            color: #22c55e;
-            font-weight: bold;
-        }
+#infoBox h2 {
+    font-size: 26px;
+}
 
-        .medium {
-            color: #facc15;
-            font-weight: bold;
-        }
+#infoBox h3 {
+    font-size: 18px;
+}
 
-        .high {
-            color: #ef4444;
-            font-weight: bold;
-        }
+#infoBox p {
+    font-size: 16px;
+    line-height: 1.6;
+}
 
-        ul {
-            margin-top: 10px;
-        }
-    </style>
+.card h2 {
+    font-size: 26px;
+}
+
+.card p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.card b {
+    font-size: 18px;
+}
+
+.card ul li {
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+</style>
 </head>
 
 <body>
 
-    <h1>🔍 Phishing Detection Tool</h1>
-    <p class="subtitle">Analyze URLs for phishing, spoofing, and suspicious patterns</p>
+<div class="container">
 
-    <form method="POST">
+<h1>Phishing Detection Tool</h1>
 
-        <div class="input-section">
-            <input 
-                type="text" 
-                name="url" 
-                id="urlInput"
-                placeholder="Enter a URL to analyze..."
-                value="{{ request.form.get('url', '') }}"
-                required
-            >
-        </div>
+<p class="subtitle">
+Analyze URLs for phishing, spoofing, and suspicious patterns
+</p>
 
-        <div class="buttons">
-            <button type="submit">Analyze URL</button>
+<form method="POST">
 
-            <button type="button" class="demo-btn" onclick="loadDemo()">
-                Try Example
-            </button>
+<input
+    type="text"
+    name="url"
+    id="urlInput"
+    placeholder="Enter a URL to analyze..."
+    value="{{ request.form.get('url', '') }}"
+    required
+>
 
-            <button type="button" onclick="toggleInfo()">
-                Details
-            </button>
-        </div>
-    </form>
+<div class="button-row">
 
-    {% if result %}
-    <div class="card">
+<button type="submit">Analyze URL</button>
 
-        <h2>Analysis Results</h2>
+<button type="button" class="secondary-btn" onclick="loadDemo()">Try Example</button>
 
-        <p><strong>URL:</strong> {{ result.url }}</p>
-        <p><strong>Score:</strong> {{ result.score }}/100</p>
+<button type="button" class="secondary-btn" onclick="toggleInfo()">Details</button>
 
-        <p>
-            <strong>Risk Level:</strong>
-            <span class="{{ result.risk|lower }}">
-                {{ result.risk }}
-            </span>
-        </p>
+</div>
 
-        <h3>Detected Indicators:</h3>
-        <ul>
-            {% for r in result.reasons %}
-                <li>{{ r }}</li>
-            {% endfor %}
-        </ul>
+</form>
 
-    </div>
-    {% endif %}
+{% if result %}
+<div class="card">
 
-    <div id="infoBox" style="display:none; background:#1e293b; padding:20px; border-radius:14px; width:450px; margin:20px auto; text-align:left;">
+<h2>Analysis Results</h2>
 
-        <h2>About This Tool</h2>
+<p><b>URL:</b> {{ result.url }}</p>
+<p><b>Score:</b> {{ result.score }}/100</p>
 
-        <p>This tool analyzes URLs to identify phishing attempts, spoofed domains, and suspicious behavior patterns that are commonly used in cyber attacks.</p>
+<p>
+<b>Risk Level:</b>
+<span class="{{ result.risk|lower }}">
+{{ result.risk }}
+</span>
+</p>
 
-        <h3>Features</h3>
-        <p>
-            URL structure analysis<br>
-            Detection of brand impersonation<br>
-            Suspicious keyword and pattern scanning<br>
-            Risk scoring based on multiple indicators
-        </p>
+<h3>Detected Indicators</h3>
+<ul>
+{% for r in result.reasons %}
+    <li>{{ r }}</li>
+{% endfor %}
+</ul>
 
-        <h3>Tech Stack</h3>
-        <p>Python Flask HTML CSS</p>
+</div>
+{% endif %}
 
-    </div>
+<div id="infoBox">
 
-        <script>
-        function loadDemo() {
-            document.getElementById("urlInput").value =
-                "http://paypal-secure-login.verify-account.ru";
-        }
+<h2>About This Tool</h2>
 
-        function toggleInfo() {
-            var box = document.getElementById("infoBox");
-            if (box.style.display === "block") {
-                box.style.display = "none";
-            } else {
-                box.style.display = "block";
-            }
-        }
-    </script>
+<p>
+This tool analyzes URLs to identify phishing attempts, spoofed domains, and suspicious behavior patterns that are commonly used in cyber attacks.
+</p>
+
+<h3>Features</h3>
+<p>
+URL structure analysis<br>
+Detection of brand impersonation<br>
+Suspicious keyword scanning<br>
+Risk scoring system
+</p>
+
+<h3>Tech Stack</h3>
+<p>Python Flask HTML CSS</p>
+
+</div>
+
+</div>
+
+<script>
+function loadDemo() {
+    document.getElementById("urlInput").value =
+        "http://paypal-secure-login.verify-account.ru";
+}
+
+function toggleInfo() {
+    var box = document.getElementById("infoBox");
+    box.style.display = (box.style.display === "block") ? "none" : "block";
+}
+</script>
 
 </body>
 </html>
